@@ -1,7 +1,10 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { formSchema } from "@/lib/schema";
+import { UseFormReturn } from "react-hook-form";
+import { z } from "zod";
 
-export default function BusinessTypeSection({ form }: { form: any }) {
+export default function BusinessTypeSection({ form }: { form: UseFormReturn<z.infer<typeof formSchema>> }) {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium">Business Type</h3>

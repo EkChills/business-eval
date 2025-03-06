@@ -22,43 +22,11 @@ import OperationalEfficiencySection from "./OperationalEfficiencySection";
 import ResultsSection from "./ResultsSection";
 import SystemsProcessesSection from "./SystemsProcessSection";
 import TeamLeadershipSection from "./TeamLeadershipSection";
+import { formSchema } from "@/lib/schema";
 
 
 
-const formSchema = z.object({
-  businessAge: z.string(),
-  businessType: z.string(),
-  systemsProcesses: z.object({
-    trackingTools: z.string(),
-    documentedProcesses: z.string(),
-    dataDecisions: z.string(),
-  }),
-  innovationStrategy: z.object({
-    exploreOpportunities: z.string(),
-    adaptToChanges: z.string(),
-    clearVision: z.string(),
-  }),
-  finances: z.object({
-    cashFlowUnderstanding: z.string(),
-    profitability: z.string(),
-    emergencyFunds: z.string(),
-  }),
-  operationalEfficiency: z.object({
-    streamlinedOperations: z.string(),
-    automationTechnology: z.string(),
-    handleDemand: z.string(),
-  }),
-  marketPresence: z.object({
-    targetMarketUnderstanding: z.string(),
-    customerBaseGrowth: z.string(),
-    repeatBusiness: z.string(),
-  }),
-  teamLeadership: z.object({
-    definedRoles: z.string(),
-    teamCommunication: z.string(),
-    taskDelegation: z.string(),
-  }),
-});
+
 
 export default function BusinessAssessmentForm() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -116,7 +84,7 @@ export default function BusinessAssessmentForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("submit ran");
     
-    // console.log(values);
+    console.log(values, isSubmitted);
     setIsSubmitted(true);
     setCurrentStep(steps.length - 1);
   }

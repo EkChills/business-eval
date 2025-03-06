@@ -114,7 +114,7 @@ export default function ResultsSection({ formValues }: { formValues: any }) {
     <div className="space-y-8">
       <div className="text-center">
         <h3 className="text-2xl font-bold mb-2">Your Business Health Assessment</h3>
-        <p className="text-gray-600">Based on your responses, here's how your business is performing:</p>
+        <p className="text-gray-600">Based on your responses, here&apos;s how your business is performing:</p>
       </div>
       
       <Card className="border-0 shadow-md bg-gradient-to-r from-blue-50 to-indigo-50">
