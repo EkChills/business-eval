@@ -1,10 +1,12 @@
 import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer"
 
 export const POST = async (req: NextRequest) => {
   const decodedCred = JSON.parse(atob(process.env.GOOGLE_CREDENTIALS as string));
   
   const body = await req.json();
+  const {SMTP_EMAIL, SMTP_PASSWORD} = process.env
 
   try {
       const auth = new google.auth.GoogleAuth({
@@ -24,6 +26,21 @@ export const POST = async (req: NextRequest) => {
         },
       });
 
+    
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: SMTP_EMAIL,
+            pass: SMTP_PASSWORD,
+          },
+        });
+        let info = await transporter.sendMail({
+          from: SMTP_EMAIL,
+          to: body.email,
+          subject: ``,
+          html: "",
+        });
+
       return NextResponse.json({ success: true });
     
   } catch (error) {
@@ -34,4 +51,4 @@ export const POST = async (req: NextRequest) => {
 
 
 
-};
+}

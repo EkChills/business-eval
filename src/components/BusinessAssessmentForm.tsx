@@ -9,7 +9,10 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-    Form
+  Form,
+  FormControl,
+  FormField,
+  FormLabel
 } from "@/components/ui/form";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
@@ -23,6 +26,8 @@ import ResultsSection from "./ResultsSection";
 import SystemsProcessesSection from "./SystemsProcessSection";
 import TeamLeadershipSection from "./TeamLeadershipSection";
 import { formSchema } from "@/lib/schema";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 
 
@@ -31,12 +36,13 @@ import { formSchema } from "@/lib/schema";
 export default function BusinessAssessmentForm() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       businessAge: "",
       businessType: "",
+      email: "",
       systemsProcesses: {
         trackingTools: "",
         documentedProcesses: "",
@@ -82,21 +88,20 @@ export default function BusinessAssessmentForm() {
   ];
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("submit ran");
-    
-    console.log(values, isSubmitted);
-    setIsSubmitted(true);
-    setCurrentStep(steps.length - 1);
+
+    console.log(values, isSubmitted, "is sssed");
+    // setIsSubmitted(true);
+    // setCurrentStep(0);
   }
 
   const nextStep = () => {
     console.log("so curr step is", currentStep);
-    
-    if(currentStep === 5) {
-        console.log("ran 6");
-        
-        setCurrentStep(6)
-        return
+
+    if (currentStep === 5) {
+      console.log("ran 6");
+
+      setCurrentStep(6)
+      return
     }
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
@@ -110,7 +115,7 @@ export default function BusinessAssessmentForm() {
   };
 
   console.log("curr step", currentStep);
-  
+
 
   const progressPercentage = ((currentStep) / (steps.length - 1)) * 100;
 
@@ -127,22 +132,33 @@ export default function BusinessAssessmentForm() {
                 </CardDescription>
               </div>
               <div className="flex items-center gap-2 text-sm text-white">
-              <span>Step {currentStep + 1} of {steps.length}</span>
+                <span>Step {currentStep + 1} of {steps.length}</span>
               </div>
             </div>
           </CardHeader>
-          
+
           <Progress value={progressPercentage} className="h-1 rounded-none" />
-          
+
           <CardContent className="p-6 md:p-8">
             {currentStep === 0 && (
               <div className="space-y-8">
+                <FormField
+                  name="email"
+                  control={form.control}
+                  render={({ field }) => (
+
+                    <FormControl className="space-y-4">
+                      <FormLabel htmlFor="email" className="text-lg font-medium">What's your email address?</FormLabel>
+                      <Input {...field} type="email" id="email" placeholder="Email" />
+                    </FormControl>
+                  )}
+                />
                 <BusinessAgeSection form={form} />
                 <Separator />
                 <BusinessTypeSection form={form} />
               </div>
             )}
-            
+
             {currentStep === 1 && <SystemsProcessesSection form={form} />}
             {currentStep === 2 && <InnovationStrategySection form={form} />}
             {currentStep === 3 && <FinancesSection form={form} />}
@@ -151,38 +167,38 @@ export default function BusinessAssessmentForm() {
             {currentStep === 6 && <TeamLeadershipSection form={form} />}
             {currentStep === 7 && <ResultsSection formValues={form.getValues()} />}
           </CardContent>
-          
+
           <CardFooter className="flex justify-between p-6 bg-gray-50 border-t">
-            <Button 
-              type="button" 
-              variant="outline" 
+            <Button
+              type="button"
+              variant="outline"
               onClick={prevStep}
               className="cursor-pointer"
               disabled={currentStep === 0}
             >
               <ChevronLeft className="mr-2 h-4 w-4" /> Previous
             </Button>
-            
+
             <div>
               {currentStep < steps.length - 2 && (
-                 <Button className="cursor-pointer" type="button" onClick={nextStep}>
-                 Next <ChevronRight className="ml-2 h-4 w-4" />
-               </Button>
-             
+                <Button className="cursor-pointer" type="button" onClick={nextStep}>
+                  Next <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>
+
               )}
 
               {currentStep === steps.length - 2 && (
                 <Button type="submit">
-                Submit <Send className="ml-2 h-4 w-4" />
-              </Button>
+                  Submit <Send className="ml-2 h-4 w-4" />
+                </Button>
               )}
 
               {currentStep === steps.length - 1 && (
                 <Button type="button" variant="outline" onClick={() => window.print()}>
-                Print Results <BarChart3 className="ml-2 h-4 w-4" />
-              </Button>
+                  Print Results <BarChart3 className="ml-2 h-4 w-4" />
+                </Button>
               )}
-               
+
             </div>
           </CardFooter>
         </Card>
