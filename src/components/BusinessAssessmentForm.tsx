@@ -233,7 +233,7 @@ export default function BusinessAssessmentForm() {
 
               {currentStep === steps.length - 2 && (
                 <Button className="cursor-pointer" disabled={isEvaluating} type="submit">
-                  {isEvaluating ? <Loader2 className="size-4 animate-spin" /> : <>Submit <Send className="ml-2 h-4 w-4" /></>}
+                  {isEvaluating ? <div className="flex items-center gap-2"><span>Submitting</span><Loader2 className="size-4 animate-spin" /></div> : <>Submit <Send className="ml-2 h-4 w-4" /></>}
                 </Button>
               )}
 
