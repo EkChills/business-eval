@@ -155,32 +155,11 @@ export default function ResultsSection({ formValues }: { formValues: any }) {
       </Card>
       
       <div className="space-y-6">
-        <h3 className="text-xl font-bold">Recommendations for Improvement</h3>
+        <h3 className="text-xl font-bold">A mail has been sent to you with some recommendations</h3>
         <p className="text-gray-600">Focus on these areas to strengthen your business:</p>
+        </div>
         
-        {recommendations.map((rec, index) => (
-          <Card key={index} className="border border-gray-200">
-            <CardContent className="pt-6">
-              <h4 className="text-lg font-semibold mb-3">{rec.category}</h4>
-              <ul className="space-y-2">
-                {rec.tips.map((tip, tipIndex) => (
-                  <li key={tipIndex} className="flex items-start">
-                    <span className="text-blue-600 mr-2">•</span>
-                    <span>{tip}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-      
-      <div className="text-center pt-4">
-        <p className="text-gray-600 italic">
-          This assessment provides a snapshot of your current business health. 
-          Consider revisiting this assessment every 3-6 months to track your progress.
-        </p>
-      </div>
+       
     </div>
   );
 }

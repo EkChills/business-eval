@@ -1,10 +1,11 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BarChart3, ChevronLeft, ChevronRight, Send } from 'lucide-react';
+import { BarChart3, ChevronLeft, ChevronRight, Loader2, Send } from 'lucide-react';
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import axios from "axios"
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +13,7 @@ import {
   Form,
   FormControl,
   FormField,
+  FormItem,
   FormLabel
 } from "@/components/ui/form";
 import { Progress } from "@/components/ui/progress";
@@ -28,6 +30,7 @@ import TeamLeadershipSection from "./TeamLeadershipSection";
 import { formSchema } from "@/lib/schema";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { toast } from "sonner";
 
 
 
@@ -35,6 +38,7 @@ import { Label } from "./ui/label";
 
 export default function BusinessAssessmentForm() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [isEvaluating, setIsEvaluating] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -87,12 +91,48 @@ export default function BusinessAssessmentForm() {
     { title: "Results", description: "View your assessment results" }
   ];
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
 
-    console.log(values, isSubmitted, "is sssed");
-    // setIsSubmitted(true);
-    // setCurrentStep(0);
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    const maxScore = 5; // Max possible score per question
+    let totalScore = 0;
+    const sectionScores: Record<string, number> = {};
+  
+    // Calculate scores for each section
+    Object.entries(values).forEach(([sectionName, section]) => {
+      if (typeof section === "object" && section !== null) {
+        let sectionScore = Object.values(section)
+          .filter((val) => val !== "") // Ignore empty fields
+          .reduce((sum, val) => sum + parseInt(val, 10), 0);
+  
+        totalScore += sectionScore;
+        sectionScores[sectionName] = sectionScore; // Key matches Google Sheets column
+      }
+    });
+  
+    const payload = {
+      email: values.email,
+      totalScore: ((totalScore / 90) * 100 ),
+      ...sectionScores, // Spread to include all section-wise scores
+    };
+  
+    console.log("Submitting payload:", payload);
+  
+    // Send data to API using axios
+    setIsEvaluating(true);
+    axios.post("/api/evaluate", payload)
+      .then((response) => {
+        console.log("Submission successful:", response.data);
+        setIsSubmitted(true);
+        toast.success("Your assessment has been submitted successfully!");
+        setCurrentStep(steps.length - 1);
+      })
+      .catch((error) => {
+        console.error("Submission error:", error);
+      }).finally(() => {
+        setIsEvaluating(false);
+      })
   }
+  
 
   const nextStep = () => {
     console.log("so curr step is", currentStep);
@@ -148,11 +188,15 @@ export default function BusinessAssessmentForm() {
                   render={({ field }) => (
 
                     <FormControl className="space-y-4">
-                      <FormLabel htmlFor="email" className="text-lg font-medium">What's your email address?</FormLabel>
+                      <FormItem>
+                      <Label htmlFor="email" className="text-lg font-medium">What&apos;s your email address?</Label>
                       <Input {...field} type="email" id="email" placeholder="Email" />
+
+                      </FormItem>
                     </FormControl>
                   )}
                 />
+                
                 <BusinessAgeSection form={form} />
                 <Separator />
                 <BusinessTypeSection form={form} />
@@ -174,7 +218,7 @@ export default function BusinessAssessmentForm() {
               variant="outline"
               onClick={prevStep}
               className="cursor-pointer"
-              disabled={currentStep === 0}
+              disabled={currentStep === 0 || currentStep === steps.length - 1}
             >
               <ChevronLeft className="mr-2 h-4 w-4" /> Previous
             </Button>
@@ -188,8 +232,8 @@ export default function BusinessAssessmentForm() {
               )}
 
               {currentStep === steps.length - 2 && (
-                <Button type="submit">
-                  Submit <Send className="ml-2 h-4 w-4" />
+                <Button className="cursor-pointer" disabled={isEvaluating} type="submit">
+                  {isEvaluating ? <Loader2 className="size-4 animate-spin" /> : <>Submit <Send className="ml-2 h-4 w-4" /></>}
                 </Button>
               )}
 
