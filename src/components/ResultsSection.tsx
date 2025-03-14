@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { templates } from "@/lib/templates";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import BusinessStageResults from "./BusinessStageResults";
 
-export default function ResultsSection({ formValues }: { formValues: any }) {
+export default function ResultsSection({ formValues, overallBScore }: { formValues: any, overallBScore: number }) {
   // Calculate average scores for each category
   const calculateCategoryScore = (category: string) => {
     if (!formValues[category]) return 0;
@@ -64,51 +66,14 @@ export default function ResultsSection({ formValues }: { formValues: any }) {
 
   const healthStatus = getHealthStatus(overallScore);
 
-  // Get recommendations based on lowest scores
-  const getRecommendations = () => {
-    const sortedData = [...data].sort((a, b) => a.score - b.score);
-    const lowestCategories = sortedData.slice(0, 2);
-    
-    const recommendations: Record<string, string[]> = {
-      "Systems & Processes": [
-        "Implement project management software to track tasks and workflows",
-        "Document your key business processes for consistency and training",
-        "Set up regular data review meetings to make informed decisions"
-      ],
-      "Innovation & Strategy": [
-        "Schedule quarterly innovation sessions to brainstorm new ideas",
-        "Develop a 3-5 year strategic plan with clear milestones",
-        "Allocate resources for testing new products or services"
-      ],
-      "Finances": [
-        "Set up a cash flow forecasting system",
-        "Review your pricing strategy to improve profitability",
-        "Establish an emergency fund equal to 3-6 months of operating expenses"
-      ],
-      "Operational Efficiency": [
-        "Conduct a workflow analysis to identify bottlenecks",
-        "Invest in automation tools for repetitive tasks",
-        "Implement quality control measures to maintain standards during growth"
-      ],
-      "Market Presence": [
-        "Conduct customer research to better understand your target market",
-        "Develop a customer referral program to encourage word-of-mouth",
-        "Create a customer feedback system to continuously improve"
-      ],
-      "Team & Leadership": [
-        "Create clear job descriptions and responsibility charts",
-        "Establish regular team meetings and one-on-ones",
-        "Develop a delegation system with appropriate follow-up procedures"
-      ]
-    };
-    
-    return lowestCategories.map(category => ({
-      category: category.name,
-      tips: recommendations[category.name]
-    }));
-  };
+  function getEmailString() {
+    if (overallBScore <= 18) return templates.lowest();
+    if (overallBScore <= 45) return templates.low();
+    if (overallBScore <= 60) return templates.medium();
+    if (overallBScore <= 75) return templates.good();
+    return templates.high();
+  }
 
-  const recommendations = getRecommendations();
 
   return (
     <div className="space-y-8">
@@ -124,7 +89,7 @@ export default function ResultsSection({ formValues }: { formValues: any }) {
             <h4 className={`text-3xl font-bold ${healthStatus.color}`}>
               {healthStatus.status}
             </h4>
-            <p className="text-2xl font-semibold mt-2">{overallScore} / 5</p>
+            <p className="text-2xl font-semibold mt-2">{overallBScore} / 100</p>
           </div>
           
           <div className="h-80 w-full">
@@ -154,9 +119,8 @@ export default function ResultsSection({ formValues }: { formValues: any }) {
         </CardContent>
       </Card>
       
-      <div className="space-y-6">
-        <h3 className="text-xl font-bold">A mail has been sent to you with some recommendations</h3>
-        <p className="text-gray-600">Focus on these areas to strengthen your business:</p>
+      <div className="space-y-6 flex w-full">
+        <BusinessStageResults overallBScore={overallBScore} />
         </div>
         
        

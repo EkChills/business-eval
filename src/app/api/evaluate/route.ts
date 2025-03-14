@@ -56,26 +56,7 @@ export const POST = async (req: NextRequest) => {
       },
     });
 
-    // Send email notification
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: SMTP_EMAIL, pass: SMTP_PASSWORD },
-    });
 
-    const emailString = () => {
-      if (totalScore <= 18) return templates.lowest();
-      if (totalScore <= 45) return templates.lowest();
-      if (totalScore <= 60) return templates.medium();
-      if (totalScore <= 75) return templates.good();
-      return templates.high();
-    };
-
-    await transporter.sendMail({
-      from: SMTP_EMAIL,
-      to: email,
-      subject: "Your Test Scores",
-      html: emailString(),
-    });
 
     return NextResponse.json({ success: true, message: "Data saved & email sent!" });
 

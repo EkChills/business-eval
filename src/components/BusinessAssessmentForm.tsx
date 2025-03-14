@@ -39,6 +39,7 @@ import { toast } from "sonner";
 export default function BusinessAssessmentForm() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isEvaluating, setIsEvaluating] = useState(false);
+  const [oScore, setOScore] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -108,10 +109,12 @@ export default function BusinessAssessmentForm() {
         sectionScores[sectionName] = sectionScore; // Key matches Google Sheets column
       }
     });
+
+    setOScore((Math.round((totalScore / 90) * 100 )))
   
     const payload = {
       email: values.email,
-      totalScore: ((totalScore / 90) * 100 ),
+      totalScore: oScore,
       ...sectionScores, // Spread to include all section-wise scores
     };
   
@@ -209,7 +212,7 @@ export default function BusinessAssessmentForm() {
             {currentStep === 4 && <OperationalEfficiencySection form={form} />}
             {currentStep === 5 && <MarketPresenceSection form={form} />}
             {currentStep === 6 && <TeamLeadershipSection form={form} />}
-            {currentStep === 7 && <ResultsSection formValues={form.getValues()} />}
+            {currentStep === 7 && <ResultsSection overallBScore={oScore} formValues={form.getValues()} />}
           </CardContent>
 
           <CardFooter className="flex justify-between p-6 bg-gray-50 border-t">

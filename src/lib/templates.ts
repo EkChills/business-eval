@@ -10,7 +10,7 @@ export const templates = {
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #f4f4f4; padding: 20px;">
       <tr>
         <td align="center">
-          <table role="presentation" width="600px" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+          <table role="presentation" width="600px" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 8px; padding: 20px;">
             <!-- HEADER -->
             <tr>
               <td align="center" style="padding-bottom: 20px;">
@@ -52,19 +52,11 @@ export const templates = {
                   Wishing you the best on your entrepreneurial journey! 🚀
                 </p>
 
-                <p style="color: #333333; font-size: 16px; font-weight: bold;">
-                  Best Wishes,<br>
-                  [Your Company Name]
-                </p>
+         
               </td>
             </tr>
 
-            <!-- FOOTER -->
-            <tr>
-              <td align="center" style="padding-top: 20px; font-size: 14px; color: #777777;">
-                <p>&copy; 2025 [Your Company Name]. All Rights Reserved.</p>
-              </td>
-            </tr>
+           
 
           </table>
         </td>
@@ -84,7 +76,7 @@ export const templates = {
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #f4f4f4; padding: 20px;">
       <tr>
         <td align="center">
-          <table role="presentation" width="600px" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+          <table role="presentation" width="600px" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 8px; padding: 20px; ">
             
             <!-- HEADER -->
             <tr>
@@ -150,17 +142,7 @@ export const templates = {
                   Wishing you success on your business journey! 🚀
                 </p>
 
-                <p style="color: #333333; font-size: 16px; font-weight: bold;">
-                  Best Wishes,<br>
-                  [Your Company Name]
-                </p>
-              </td>
-            </tr>
-
-            <!-- FOOTER -->
-            <tr>
-              <td align="center" style="padding-top: 20px; font-size: 14px; color: #777777;">
-                <p>&copy; 2025 [Your Company Name]. All Rights Reserved.</p>
+              
               </td>
             </tr>
 
@@ -182,7 +164,7 @@ export const templates = {
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #f4f4f4; padding: 20px;">
       <tr>
         <td align="center">
-          <table role="presentation" width="600px" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 8px; padding: 20px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+          <table role="presentation" width="600px" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 8px; padding: 20px;">
             
             <!-- HEADER -->
             <tr>
@@ -244,17 +226,7 @@ export const templates = {
                   Wishing you continued growth and prosperity! 🚀
                 </p>
 
-                <p style="color: #333333; font-size: 16px; font-weight: bold;">
-                  Best Wishes,<br>
-                  [Your Company Name]
-                </p>
-              </td>
-            </tr>
-
-            <!-- FOOTER -->
-            <tr>
-              <td align="center" style="padding-top: 20px; font-size: 14px; color: #777777;">
-                <p>&copy; 2025 [Your Company Name]. All Rights Reserved.</p>
+      
               </td>
             </tr>
 
@@ -282,11 +254,11 @@ export const templates = {
             background-color: #f4f4f4;
         }
         .container {
-            max-width: 800px;
+            max-width: 100%;
             background: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           
         }
         h1 {
             color: #333;
@@ -355,7 +327,6 @@ export const templates = {
             <li>✔ <strong>Maintain Core Values:</strong> Uphold the principles that define your business.</li>
         </ul>
 
-        <p class="footer">Best Wishes!</p>
     </div>
 
 </body>
@@ -378,12 +349,11 @@ export const templates = {
             color: #333;
         }
         .container {
-            max-width: 800px;
+            max-width: 100%;
             margin: auto;
             background: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             color: #0056b3;
@@ -464,7 +434,6 @@ export const templates = {
 
         <p>The key to long-term success is staying agile, embracing change, and continuously improving your business strategies.</p>
 
-        <p class="footer">Thank you,<br>Best Wishes!</p>
     </div>
 
 </body>
