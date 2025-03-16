@@ -67,7 +67,7 @@ function generateBusinessStageHTML(overallBScore: number) {
       html += `
         <div style="margin-bottom: 24px;">
           <h2 style="font-size: 20px; font-weight: 600; color: rgb(35, 35, 88); margin: 32px 0 16px 0; padding: 0;">
-            ${section.icon ? `<span style="font-size: 32px; margin-right: 12px;">${section.icon}</span>` : ''}${section.title}
+            ${section.title}
           </h2>
           <ul style="list-style-type: none; padding: 0; margin: 0;">
       `;

@@ -240,12 +240,7 @@ export default function BusinessAssessmentForm() {
                 </Button>
               )}
 
-              {currentStep === steps.length - 1 && (
-                <Button type="button" variant="outline" onClick={() => window.print()}>
-                  Print Results <BarChart3 className="ml-2 h-4 w-4" />
-                </Button>
-              )}
-
+        
             </div>
           </CardFooter>
         </Card>
