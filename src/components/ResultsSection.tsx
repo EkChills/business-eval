@@ -90,7 +90,7 @@ export default function ResultsSection({ formValues, overallBScore }: { formValu
         windowWidth: 1024, // Simulating a normal screen size
       });
     
-      doc.save(`resume.pdf`);
+      doc.save(`assessment.pdf`);
   }
 
 
