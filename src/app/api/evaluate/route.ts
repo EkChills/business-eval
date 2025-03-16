@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
     const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
     
     const body = await req.json();
-    const { email, totalScore, ...sectionScores } = body;
+    const { email, totalScore, businessAge, businessType, ...sectionScores } = body;
 
     if (!email) {
       return new NextResponse("Missing required fields", { status: 400 });
@@ -32,7 +32,7 @@ export const POST = async (req: NextRequest) => {
 
     if (!response.data.values || response.data.values.length === 0) {
       // Headers are missing; add them
-      const headers = ["Email", "Total Score", ...Object.keys(sectionScores)];
+      const headers = ["Email", "Total Score", "Business Age", "Business Type", ...Object.keys(sectionScores)];
       await sheets.spreadsheets.values.update({
         spreadsheetId,
         range: `${sheetName}!A1`,
@@ -44,7 +44,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     // Prepare row data
-    const rowData = [email, totalScore, ...Object.values(sectionScores)];
+    const rowData = [email, totalScore, businessAge, businessType, ...Object.values(sectionScores)];
 
     // Append new row
     await sheets.spreadsheets.values.append({

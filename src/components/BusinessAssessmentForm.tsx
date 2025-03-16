@@ -114,10 +114,14 @@ export default function BusinessAssessmentForm() {
   
     const payload = {
       email: values.email,
+      businessAge: values.businessAge,
+      businessType: values.businessType,
       totalScore: oScore,
       ...sectionScores, // Spread to include all section-wise scores
     };
   
+    console.log(values, "Valuess");
+    
     console.log("Submitting payload:", payload);
   
     // Send data to API using axios
