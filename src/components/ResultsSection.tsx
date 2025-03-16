@@ -1,7 +1,15 @@
+"use client"
+
 import { Card, CardContent } from "@/components/ui/card";
 import { templates } from "@/lib/templates";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import BusinessStageResults from "./BusinessStageResults";
+import { Button } from "./ui/button";
+import { Download } from "lucide-react";
+import generatePDF, { usePDF } from 'react-to-pdf';
+import { useRef } from "react";
+import jsPDF from "jspdf";
+import { generateBusinessStageHTML } from "@/lib/html";
 
 export default function ResultsSection({ formValues, overallBScore }: { formValues: any, overallBScore: number }) {
   // Calculate average scores for each category
@@ -66,12 +74,23 @@ export default function ResultsSection({ formValues, overallBScore }: { formValu
 
   const healthStatus = getHealthStatus(overallScore);
 
-  function getEmailString() {
-    if (overallBScore <= 18) return templates.lowest();
-    if (overallBScore <= 45) return templates.low();
-    if (overallBScore <= 60) return templates.medium();
-    if (overallBScore <= 75) return templates.good();
-    return templates.high();
+  async function handleSavePdf() {
+    const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4", // Ensuring it fits A4 size
+      });
+    
+      const resumeHTML = generateBusinessStageHTML(overallBScore);
+    
+      await doc.html(resumeHTML, {
+        x: 10, // Left margin
+        y: 10, // Top margin
+        width: 190, // Ensuring it fits within A4 width (210mm - margins)
+        windowWidth: 1024, // Simulating a normal screen size
+      });
+    
+      doc.save(`resume.pdf`);
   }
 
 
@@ -119,8 +138,9 @@ export default function ResultsSection({ formValues, overallBScore }: { formValu
         </CardContent>
       </Card>
       
-      <div className="space-y-6 flex w-full">
+      <div className="space-y-6 flex w-full flex-col">
         <BusinessStageResults overallBScore={overallBScore} />
+          <Button type="button" onClick={handleSavePdf} className="ml-auto cursor-pointer" variant={"ghost"}>Export to Pdf <Download /></Button>
         </div>
         
        
