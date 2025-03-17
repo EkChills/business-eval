@@ -24,8 +24,6 @@ export default function ResultsSection({ formValues, overallBScore }: { formValu
     
     
     return Math.round((sum / values.length) * 10) / 10; // Round to 1 decimal place
-
-    
   };
 
   const data = [

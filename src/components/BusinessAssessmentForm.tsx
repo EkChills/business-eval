@@ -109,14 +109,20 @@ export default function BusinessAssessmentForm() {
         sectionScores[sectionName] = sectionScore; // Key matches Google Sheets column
       }
     });
+    const totalScorePercentage = Math.round((totalScore / 90) * 100) 
+    setOScore((prev) => {
+      return totalScorePercentage
+    })
 
-    setOScore((Math.round((totalScore / 90) * 100 )))
+    console.log(values);
+    
+    
   
     const payload = {
       email: values.email,
       businessAge: values.businessAge,
       businessType: values.businessType,
-      totalScore: oScore,
+      totalScore: totalScorePercentage,
       ...sectionScores, // Spread to include all section-wise scores
     };
   
