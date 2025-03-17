@@ -32,7 +32,7 @@ export const POST = async (req: NextRequest) => {
 
     if (!response.data.values || response.data.values.length === 0) {
       // Headers are missing; add them
-      const headers = ["Email", "Total Score", "Business Age", "Business Type", ...Object.keys(sectionScores)];
+      const headers = ["Email", "Total Rating/100", "Business Age", "Business Type", ...Object.keys(sectionScores)];
       await sheets.spreadsheets.values.update({
         spreadsheetId,
         range: `${sheetName}!A1`,
